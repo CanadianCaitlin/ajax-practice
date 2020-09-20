@@ -3,11 +3,12 @@
 // Part 1
 
 $('#get-fortune-button').on('click', () => {
-  $.get('/replaceMe', (response) => {
+  $.get('/fortune', (response) => {
     //
     // This is the body of the callback function for $.get!
     // TODO: use `response` to update the text in `div#fortune-text`
     //
+    $('#fortune-text').text(response);
   });
 });
 
@@ -19,19 +20,13 @@ $('#weather-form').on('submit', (evt) => {
 
   const formData = {
     // TODO: select the zipcode input
-    zipcode: $('REPLACE THIS').val()
+    zipcode: $('#zipcode-field').val()
   };
 
-  // TODO: choose a request method (GET or POST) by uncommenting one of
-  // these blocks of code
+  $.get('/weather', formData, (response) => {
+    $('#weather-info').text(response['forecast']);
+  });
 
-  // $.get('/replaceMe', formData, (response) => {
-  //   // Fill in the callback function
-  // });
-
-  // $.post('/replaceMe', formData, (response) => {
-  //   // Fill in the callback function
-  // });
 });
 
 
@@ -48,4 +43,14 @@ $("#order-form").on('submit', (evt) => {
   // In the callback function, use the response from the server to
   // update #order-status. IMPORTANT: if the result code is 'ERROR',
   // make it show up in red.
+
+  const formData = {
+    qty: $('#qty-field').val(),
+    melon_type: $('#melon-type-field').val()
+  };
+
+  $.post('/order-melons', formData, (response) => {
+    $('#order-status').text(response['msg']);
+  });
+
 });
